@@ -274,15 +274,39 @@ if (admissionForm) {
       submitBtn.disabled = true;
       submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting…';
 
-      setTimeout(() => {
-        formSuccess.classList.remove('hidden');
-        admissionForm.reset();
+      // BACKEND CONNECTION //
+      const data = {
+        student_name: document.getElementById("studentName").value,
+        dob: document.getElementById("dob").value,
+        class_apply: document.getElementById("classApply").value,
+        parent_name: document.getElementById("parentName").value,
+        phone: document.getElementById("phone").value,
+        email: document.getElementById("email").value,
+        address: document.getElementById("address").value
+      };
+
+      fetch("http://127.0.0.1:8000/admission", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      })
+      .then(res => res.json())
+      .then(result => {
+        formSuccess.classList.remove("hidden");
+        admissionForm,reset();
+
+        setTimeout(() => formSuccess.classList.add("hidden"), 6000);
+      })
+      .catch(err => {
+        console.error(err);
+        alert("Error submitting form");
+      })
+      .finally(() => {
         submitBtn.disabled = false;
         submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Enquiry';
-
-        /* Hide success message after 6 seconds */
-        setTimeout(() => formSuccess.classList.add('hidden'), 6000);
-      }, 1200);
+      });
     }
   });
 
@@ -350,13 +374,35 @@ if (contactForm) {
       submitBtn.disabled = true;
       submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending…';
 
-      setTimeout(() => {
+      const data = {
+        name: document.getElementById("cNmae").value,
+        phone: document.getElementById("cPhone").value,
+        subject: document.getElementById("cSubject").value,
+        message: document.getElementById("cMessage").value
+      };
+
+      fetch("http://127.0.0.1:8000/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringfy(data)
+      })
+      .then(res => res.json())
+      .then(result => {
         contactSuccess.classList.remove('hidden');
         contactForm.reset();
+
+        setTimeout(() => contactSuccess.classList.add('hidden'), 6000);
+      })
+      .catch(err => {
+        console.error(err);
+        alert("Error sending message");
+      })
+      .finally(() => {
         submitBtn.disabled = false;
         submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
-        setTimeout(() => contactSuccess.classList.add('hidden'), 6000);
-      }, 1200);
+      });
     }
   });
 
