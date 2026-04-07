@@ -285,7 +285,7 @@ if (admissionForm) {
         address: document.getElementById("address").value
       };
 
-      fetch("http://127.0.0.1:8000/admission", {
+      fetch("https://nips-website.onrender.com/admission", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -381,7 +381,7 @@ if (contactForm) {
         message: document.getElementById("cMessage").value
       };
 
-      fetch("http://127.0.0.1:8000/contact", {
+      fetch("https://nips-website.onrender.com/contact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
